@@ -14,7 +14,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         if (request.getSession().getAttribute(SystemConstant.LOGIN_USER) == null){
             //用户没有登陆
             response.sendRedirect(request.getContextPath()+"/admin/login");
-            return false;
+//            return true;
         }
         return true;
     }

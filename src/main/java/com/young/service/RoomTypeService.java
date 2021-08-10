@@ -13,4 +13,11 @@ public interface RoomTypeService {
      * @return 房型集合
      */
     List<RoomType> findAllRoomTypeByPage(RoomTypeVo roomTypeVo);
+
+    /**
+     * 添加房型
+     * @param roomType 要添加的房型
+     * @return 添加结果
+     */
+    Integer addRoomType(RoomType roomType);
 }

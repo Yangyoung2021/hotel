@@ -13,4 +13,10 @@
             </if>
         </where>
     </select>
+
+    <!--添加房型-->
+    <insert id="addRoomType" parameterType="com.young.domain.RoomType">
+        insert into t_room_type (typename,status,remark,price,livenum,bednum,roomnum,photo)
+        values(#{typeName},#{status},#{remark},#{price},#{livenum},#{bednum},#{roomnum},#{photo})
+    </insert>
 </mapper>

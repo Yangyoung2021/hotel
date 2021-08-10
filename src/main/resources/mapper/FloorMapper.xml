@@ -15,7 +15,7 @@
 
     <!--添加楼层-->
     <insert id="addFloor" parameterType="com.young.domain.Floor">
-        insert into d_floor (name,remark) values(#{name},#{remark})
+        insert into t_floor (name,remark) values(#{name},#{remark})
     </insert>
 
     <!--修改楼层信息-->

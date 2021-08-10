@@ -84,8 +84,8 @@
                                 <div class="layui-input-block">
                                     <select name="status" id="status" lay-verify="required">
                                         <option value="">请选择房型状态</option>
-                                        <option value="1">可预订可入住</option>
-                                        <option value="1">房型已满</option>
+                                        <option value="1">可预订</option>
+                                        <option value="2">房型已满</option>
                                     </select>
                                 </div>
                             </div>
@@ -99,7 +99,7 @@
                         <div class="layui-col-md3 layui-col-xs5">
                             <div class="layui-upload-list thumbBox mag0 magt3">
                                 <input type="hidden" name="photo" id="photo" value="${pageContext.request.contextPath}/statics/images/defaultimg.jpg">
-                                <img class="layui-upload-img thumbImg" src="${pageContext.request.contextPath}/statics/images/defaultimg.jpg">
+                                <img class="layui-upload-img thumbImg" src="${pageContext.request.contextPath}/statics/images/defaultImg.jpg">
                             </div>
                         </div>
                     </div>
@@ -233,6 +233,10 @@
                     $("#dataFrm")[0].reset();
                     //添加的提交请求
                     url = "/admin/roomType/addRoomType";
+                    //重置默认图片,注意：显示图片必须在图片名称前加上/show
+                    $(".thumbImg").attr("src","/statics/images/defaultImg.jpg");
+                    //重置图片隐藏域的值
+                    $("#photo").val("/statics/images/defaultImg.jpg")
                 }
             });
         }
@@ -252,7 +256,27 @@
             //禁止页面刷新
             return false;
         });
-       
+
+        //渲染文件上传区域
+        upload.render({
+            elem:".thumbImg",//绑定元素
+            url: '/admin/roomType/uploadFile',//文件上传地址
+            acceptMime: 'image/*',//规定打开文件选择框时，筛选出的文件类型
+            field: 'attach',//文件上传的字段值，等同于input标签的name属性值，该值必须与控制器中的方法参数名一致
+            method: "post",//提交方式
+            //文件上传成功后的回调函数
+            done: function (res, index, upload) {
+                //设置图片回显路径
+                $(".thumbImg").attr("src",res.data.src);
+                $('.thumbBox').css("background", "#fff");
+                //给图片隐藏域赋值
+                $("#photo").val(res.imagePath);
+            }
+        });
+
+
+
+
     });
 </script>
 

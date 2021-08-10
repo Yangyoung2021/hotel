@@ -61,11 +61,6 @@
         </mvc:message-converters>
     </mvc:annotation-driven>
 
-
-
-
-
-
     <!-- 配置文件解析器对象，要求id名称必须是multipartResolver -->
     <bean id="multipartResolver"
           class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
@@ -85,10 +80,5 @@
             <bean class="com.young.interceptor.LoginInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
-
-
-
-
-
 
 </beans>

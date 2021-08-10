@@ -26,4 +26,13 @@ public class RoomTypeServiceImpl implements RoomTypeService {
     public List<RoomType> findAllRoomTypeByPage(RoomTypeVo roomTypeVo) {
         return roomTypeMapper.findAllRoomTypeByPage(roomTypeVo);
     }
+
+    /**
+     * 添加房型
+     * @param roomType 要添加的房型
+     * @return 添加结果
+     */
+    public Integer addRoomType(RoomType roomType) {
+        return roomTypeMapper.addRoomType(roomType);
+    }
 }
