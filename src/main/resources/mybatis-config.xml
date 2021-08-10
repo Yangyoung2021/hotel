@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <settings>
+        <!-- 显示日志信息 -->
+        <setting name="logImpl" value="LOG4J"/>
+    </settings>
+
+    <typeAliases>
+        <!-- 设置别名 -->
+        <package name="com.young.domain"/>
+    </typeAliases>
+
+<!--    &lt;!&ndash;扫描映射文件所在包&ndash;&gt;-->
+<!--    <mappers>-->
+<!--        <mapper resource="mapper/MenuMapper.xml"/>-->
+<!--&lt;!&ndash;        <mapper resource="mapper/MenuMapper.xml"/>&ndash;&gt;-->
+<!--    </mappers>-->
+    
+    <!-- 引用插件分页助手 -->
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+            <!--
+                reasonable:分页合理化参数
+                当该参数设置为true时，当前页面如果小于等于0会查询第一页，大于等于最后一页时会查询最后一页，默认值为false
+            -->
+            <property name="reasonable" value="true"/>
+        </plugin>
+    </plugins>
+    
+</configuration>

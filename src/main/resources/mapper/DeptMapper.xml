@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.young.dao.DeptMapper">
+    <!-- 查询所有部门 -->
+    <select id="findDeptListByPage" resultType="com.young.domain.Dept">
+        select * from sys_dept
+        <where>
+            <if test="deptName != null and deptName != ''">
+                and deptName like concat('%',#{deptName},'%')
+            </if>
+        </where>
+    </select>
+
+    <!-- 添加部门 -->
+    <insert id="addDept" parameterType="com.young.domain.Dept">
+        insert into sys_dept (deptName,address,createDate,remark) values(#{deptName},#{address},#{createDate},#{remark})
+    </insert>
+
+    <!--修改部门信息-->
+    <update id="updateDept" parameterType="com.young.domain.Dept">
+        update sys_dept
+        <set>
+            <if test="deptName != null and deptName != ''">
+                deptName = #{deptName},
+            </if>
+            <if test="address != null and address != ''">
+                address = #{address},
+            </if>
+            <if test="remark != null and remark != ''">
+                remark = #{remark},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!-- 删除部门 -->
+    <delete id="deleteDeptById" parameterType="int" >
+        delete from sys_dept where id = #{id}
+    </delete>
+
+    <!--查询所有部门-->
+    <select id="findDeptList" resultType="com.young.domain.Dept">
+        select * from sys_dept
+    </select>
+
+</mapper>

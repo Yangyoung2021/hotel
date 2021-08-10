@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.young.dao.RoomTypeMapper">
+    <!--分页查询所有房型-->
+    <select id="findAllRoomTypeByPage"  resultType="com.young.domain.RoomType">
+        select * from t_room_type
+        <where>
+            <if test="typeName != null and typeName != '' ">
+                typeName like concat('%',#{typeName},'%')
+            </if>
+        </where>
+    </select>
+</mapper>

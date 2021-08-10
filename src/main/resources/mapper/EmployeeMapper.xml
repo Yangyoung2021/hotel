@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.young.dao.EmployeeMapper">
+    <!--根据登陆账号查询员工-->
+    <select id="findEmployeeByLoginName" resultType="com.young.domain.Employee">
+        select * from sys_employee where loginName = #{loginName}
+    </select>
+
+    <!-- 根据部门id查询员工数量 -->
+    <select id="findEmployeeByDeptId" resultType="int">
+        select count(*) from sys_employee where deptId = #{deptId}
+    </select>
+
+
+    <!-- 根据部门id查询员工数量 -->
+    <select id="findEmployeeByRoleId" resultType="int">
+        select count(*) from sys_employee where id = #{role.id}
+    </select>
+
+    <!-- 查询所有员工 -->
+    <select id="findAll" resultType="com.young.domain.Employee">
+        SELECT * , sd.`deptname`  FROM sys_employee e , sys_dept sd
+        <where>
+            e.deptId = sd.id
+            <if test="loginName!=null and loginName!=''">
+                and e.loginName like concat('%',#{loginName},'%')
+            </if>
+            <if test="name!=null and name!=''">
+                and e.name like concat('%',#{name},'%')
+            </if>
+            <if test="sex!=null">
+                and e.sex = #{sex}
+            </if>
+            <if test="deptId!=null">
+                and e.deptId = #{deptId}
+            </if>
+            <if test="startTime!=null">
+                <![CDATA[ and e.hireDate >= #{startTime} ]]>
+            </if>
+            <if test="endTime!=null">
+                <![CDATA[ and e.hireDate <= #{endTime} ]]>
+            </if>
+        </where>
+        order by e.id
+    </select>
+
+    <!--添加员工-->
+    <insert id="addEmployee" parameterType="com.young.domain.Employee">
+        insert into sys_employee (loginName,name,hireDate,deptId,sex,remark,loginPwd,salt,createdBy,createDate)
+         values(#{loginName},#{name},#{hireDate},#{deptId},#{sex},#{remark},#{loginPwd},#{salt},#{createdBy},#{createDate})
+    </insert>
+    <!--修改员工-->
+    <update id="modifyEmployee" parameterType="com.young.domain.Employee">
+        update sys_employee
+        <set>
+            <if test="loginName != null and loginName != ''">
+                loginName = #{loginName},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="hireDate != null">
+                hireDate = #{hireDate},
+            </if>
+            <if test="deptId != null">
+                deptId = #{deptId},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="remark != null and remark != ''">
+                remark = #{remark},
+            </if>
+            <if test="loginPwd != null and loginPwd != ''">
+                loginPwd = #{loginPwd},
+            </if>
+            <if test="salt != null">
+                salt = #{salt},
+            </if>
+            <if test="createdBy != null and createdBy != ''">
+                createdBy = #{createdBy},
+            </if>
+            <if test="createDate != null and createDate != ''">
+                createDate = #{createDate},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过id删除员工-->
+    <delete id="deleteEmployeeById" parameterType="int">
+        delete from sys_employee where id = #{id}
+    </delete>
+
+    <!--根据员工id删除员工角色关系-->
+    <delete id="deleteMidTable" parameterType="int">
+        delete from sys_role_employee where eid = #{employee.id}
+    </delete>
+
+
+</mapper>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.young.dao.MenuMapper">
+    <!--查询所有菜单-->
+    <select id="findAllMenu" resultType="com.young.domain.Menu">
+        select * from sys_menu
+    </select>
+
+    <!-- 根据角色id查询角色拥有的菜单 -->
+    <select id="findListByRoleId" parameterType="int" resultType="com.young.domain.Menu">
+        SELECT *  FROM sys_menu s ,sys_role_menu sr WHERE s.`id` = sr.`mid` AND sr.`rid` = #{role.id};
+    </select>
+
+    <!--查询所有菜单栏信息-->
+    <select id="findMenuListByPage" resultType="com.young.domain.Menu" parameterType="com.young.vo.MenuVo">
+        select * from sys_menu
+        <where>
+            <if test="id != null">
+                id = #{id} or pid = #{id}
+            </if>
+        </where>
+        order by id
+    </select>
+
+    <!--添加菜单-->
+    <insert id="addMenu" parameterType="com.young.domain.Menu">
+        insert into sys_menu (pid,title,href,spread,target,icon)
+         values(#{pid},#{title},#{href},#{spread},#{target},#{icon})
+    </insert>
+
+    <!--修改菜单-->
+    <update id="updateMenu" parameterType="com.young.domain.Menu">
+        update sys_menu
+        <set>
+            <if test="pid != null">
+                pid = #{pid},
+            </if>
+            <if test="title != null and title != '' ">
+                title = #{title},
+            </if>
+            <if test="href != null and href != '' ">
+                href = #{href},
+            </if>
+            <if test="spread != null">
+                spread = #{spread},
+            </if>
+            <if test="icon != null and icon != '' ">
+                icon = #{icon},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--根据id删除菜单-->
+    <delete id="deleteById" parameterType="int">
+        delete from sys_menu where id = #{id}
+    </delete>
+
+    <!-- 根据员工id查询菜单列表 -->
+    <select id="findListByEmpId" parameterType="int" resultType="com.young.domain.Menu">
+        SELECT DISTINCT t1.* FROM sys_menu t1
+              INNER JOIN
+                    sys_role_menu t2 ON t1.`id` = t2.`mid`
+              INNER JOIN
+                    sys_role_employee t3 ON t3.`rid` = t2.`rid`
+              WHERE
+                    t3.`eid`= #{employee.id};
+    </select>
+
+</mapper>
