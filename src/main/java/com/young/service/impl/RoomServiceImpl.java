@@ -70,4 +70,13 @@ public class RoomServiceImpl implements RoomService {
     public List<Room> findRoomByTypeId(Integer roomTypeId) {
         return roomMapper.findRoomByTypeId(roomTypeId);
     }
+
+    /**
+     * 查询房间使用状态
+     * @param id 房间id
+     * @return 房间使用状态
+     */
+    public Integer checkStatus(Integer id) {
+        return roomMapper.checkStatus(id);
+    }
 }

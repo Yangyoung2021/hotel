@@ -79,4 +79,9 @@
         select * from t_room where roomtypeid = #{roomtypeid}
     </select>
 
+    <!--查询房间使用状态-->
+    <select id="checkStatus" parameterType="int" resultType="int">
+        select status from t_room where id = #{id}
+    </select>
+
 </mapper>

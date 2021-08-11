@@ -48,4 +48,11 @@ public interface RoomService {
      * @return 房间集合
      */
     List<Room> findRoomByTypeId(Integer roomTypeId);
+
+    /**
+     * 查询房间使用状态
+     * @param id 房间id
+     * @return 房间使用状态
+     */
+    Integer checkStatus(Integer id);
 }

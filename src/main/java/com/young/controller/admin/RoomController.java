@@ -111,4 +111,21 @@ public class RoomController {
         return JSON.toJSONString(map);
     }
 
+    /**
+     * 查询房间状态
+     * @param id 房间id
+     * @return 回显信息
+     */
+    @RequestMapping("/checkStatus")
+    public String checkStatus(Integer id){
+        Map<String,Object> map = new HashMap<String, Object>();
+        if (roomService.checkStatus(id) != 1){
+            //删除成功
+            map.put(SystemConstant.EXIST,true);
+            //返回信息
+            map.put(SystemConstant.MSG,"当前房间仍在使用中，不可删除");
+        }
+        return JSON.toJSONString(map);
+    }
+
 }

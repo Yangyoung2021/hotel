@@ -55,9 +55,9 @@
                             <div class="layui-input-inline">
                                 <select name="status" id="s_status" autocomplete="off" class="layui-input">
                                     <option value="">全部</option>
-                                    <option value="1">已入住</option>
+                                    <option value="1">可预订</option>
                                     <option value="2">已预定</option>
-                                    <option value="3">可预订</option>
+                                    <option value="3">已入住</option>
                                 </select>
                             </div>
                         </div>
@@ -392,19 +392,28 @@
          * @param data 当前行的数据
          */
         function deleteById(data){
-            //提示用户是否确定删除房间
-            layer.confirm("确定要删<span style='color: red'>"+data.typename+"</span>吗",function (index){
-                //用户确定删除
-                $.get("/admin/room/deleteRoom",{"id":data.id},function (result){
-                    if (result.success){
-                        //删除成功
-                        tableIns.reload();
-                    }
-                    //提示信息
+            //判断该房间状态
+            $.get("/admin/room/checkStatus",{"id":data.id},function (result){
+                if(result.exist){
+                    //房间在使用中，提示无法删除
                     layer.msg(result.message);
-                },"json");
-                layer.close(index);
-            });
+                }else{
+                    //提示用户是否确定删除房间
+                    layer.confirm("确定要删<span style='color: red'>"+data.roomnum+"</span>房间吗",function (index){
+                        //用户确定删除
+                        $.get("/admin/room/deleteRoom",{"id":data.id},function (result){
+                            if (result.success){
+                                //删除成功
+                                tableIns.reload();
+                            }
+                            //提示信息
+                            layer.msg(result.message);
+                        },"json");
+                        layer.close(index);
+                    });
+                }
+            },"json");
+
         }
     });
 </script>
