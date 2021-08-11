@@ -64,4 +64,9 @@
             where id = #{id}
     </update>
 
+    <!--删除房间-->
+    <delete id="deleteRoom" parameterType="int">
+        delete from t_room where id = #{id}
+    </delete>
+
 </mapper>

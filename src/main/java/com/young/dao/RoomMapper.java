@@ -27,4 +27,11 @@ public interface RoomMapper {
      * @return 修改结果
      */
     Integer updateRoom(Room room);
+
+    /**
+     * 删除房间
+     * @param id 房间id
+     * @return 删除结果
+     */
+    Integer deleteRoom(Integer id);
 }

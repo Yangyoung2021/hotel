@@ -43,4 +43,13 @@ public class RoomServiceImpl implements RoomService {
     public Integer updateRoom(Room room) {
         return roomMapper.updateRoom(room);
     }
+
+    /**
+     * 删除房间
+     * @param id 房间id
+     * @return 删除结果
+     */
+    public Integer deleteRoom(Integer id) {
+        return roomMapper.deleteRoom(id);
+    }
 }

@@ -21,17 +21,17 @@ public class FileController {
 
     /**
      * 文件上传方法
-     * @param attach 与jsp页面保持一致
+     * @param file 与jsp页面保持一致
      * @return 返回信息
      */
     @RequestMapping("/uploadFile")
-    public String uploadFile(MultipartFile attach){
+    public String uploadFile(MultipartFile file){
         //1.创建回显集合
         Map<String, Object> map = new HashMap<String, Object>();
         //2.判断文件是否为空
-        if (!attach.isEmpty()){
+        if (!file.isEmpty()){
             //3.不为空，得到原始文件名
-            String originalFilename = attach.getOriginalFilename();
+            String originalFilename = file.getOriginalFilename();
             //4.获取源文件的扩展名
             String file_extension = FilenameUtils.getExtension(originalFilename);
             //5.将文件重命名
@@ -51,7 +51,7 @@ public class FileController {
             }
             //11.进行文件上传
             try {
-                attach.transferTo(destPath);
+                file.transferTo(destPath);
                 map.put("code",0);//状态码
                 map.put("msg","文件上传成功");//文件上传提示信息
                 Map<String,Object> dataMap = new HashMap<String, Object>();

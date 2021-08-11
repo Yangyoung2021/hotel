@@ -23,13 +23,13 @@ public class Room {
         if (status != null){
             switch (status){
                 case 1 :
-                    statusStr = "已入住";
+                    statusStr = "可预订";
                 break;
                 case 2 :
                     statusStr = "已预定";
                     break;
                 case 3 :
-                    statusStr = "可预订";
+                    statusStr = "已入住";
                     break;
             }
         }
@@ -37,6 +37,19 @@ public class Room {
     }
 
     public void setStatusStr(String statusStr) {
+        if (status != null){
+            switch (status){
+                case 1 :
+                    statusStr = "可预订";
+                    break;
+                case 2 :
+                    statusStr = "已预定";
+                    break;
+                case 3 :
+                    statusStr = "已入住";
+                    break;
+            }
+        }
         this.statusStr = statusStr;
     }
 

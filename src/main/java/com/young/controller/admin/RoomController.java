@@ -88,4 +88,27 @@ public class RoomController {
         return JSON.toJSONString(map);
     }
 
+    /**
+     * 删除房间
+     * @param id 房间id
+     * @return 返回信息
+     */
+    @RequestMapping("/deleteRoom")
+    public String deleteRoom(Integer id){
+        //创建返回信息的集合
+        Map<String,Object> map = new HashMap<String, Object>();
+        if (roomService.deleteRoom(id) > 0){
+            //删除成功
+            map.put(SystemConstant.SUCCESS,true);
+            //返回信息
+            map.put(SystemConstant.MSG,"删除成功");
+        }else{
+            //删除成功
+            map.put(SystemConstant.SUCCESS,false);
+            //返回信息
+            map.put(SystemConstant.MSG,"删除失败");
+        }
+        return JSON.toJSONString(map);
+    }
+
 }

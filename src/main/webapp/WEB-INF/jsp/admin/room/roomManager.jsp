@@ -127,8 +127,8 @@
                         </div>
                         <div class="layui-col-md3 layui-col-xs5">
                             <div class="layui-upload-list thumbBox mag0 magt3">
-                                <input type="hidden" name="photo" id="photo" value="/images/defaultImg.jpg">
-                                <img class="layui-upload-img thumbImg" src="/hotel/show/images/defaultImg.jpg">
+                                <input type="hidden" name="photo" id="photo" value="/images/defaultimg.jpg">
+                                <img class="layui-upload-img thumbImg" src="/hotel/show/images/defaultimg.jpg">
                             </div>
                         </div>
                     </div>
@@ -291,15 +291,20 @@
                     //添加的提交请求
                     url = "/admin/room/addRoom";
                     //重置默认图片,注意：显示图片必须在图片名称前加上/hotel/show
-                    $(".thumbImg").attr("src","/hotel/show/images/defaultImg.jpg");
+                    $(".thumbImg").attr("src","/hotel/show/images/defaultimg.jpg");
                     //重置图片隐藏域的值
-                    $("#photo").val("images/defaultImg.jpg");
+                    $("#photo").val("images/defaultimg.jpg");
                 }
             });
             //设置默认窗口最大化
             layer.full(mainIndex);
-            //显示富文本域
-            detail = layedit.build("roomdesc");
+            //初始化富文本域
+            detail = layedit.build("roomdesc",{
+                uploadImg:{
+                    url:"/admin/file/uploadFile",//文件上传地址
+                    type:"post"//提交方式
+                }
+            });
         }
 
         //监听表单提交事件
@@ -325,7 +330,7 @@
             elem:".thumbImg",//绑定元素
             url: '/admin/file/uploadFile',//文件上传地址
             acceptMime: 'image/*',//规定打开文件选择框时，筛选出的文件类型
-            field: 'attach',//文件上传的字段值，等同于input标签的name属性值，该值必须与控制器中的方法参数名一致
+            field: 'file',//文件上传的字段值，等同于input标签的name属性值，该值必须与控制器中的方法参数名一致
             method: "post",//提交方式
             //文件上传成功后的回调函数
             done: function (res, index, upload) {
@@ -369,6 +374,15 @@
                     $(".thumbImg").attr("src","/hotel/show/"+data.photo);
                     //隐藏值回显
                     $("#photo").val(data.photo)
+                }
+            });
+            //设置默认窗口最大化
+            // layer.full(mainIndex);
+            //初始化富文本域
+            detail = layedit.build("roomdesc",{
+                uploadImg:{
+                    url:"/admin/file/uploadFile",//文件上传地址
+                    type:"post"//提交方式
                 }
             });
         }
