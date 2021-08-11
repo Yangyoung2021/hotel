@@ -23,4 +23,21 @@
         </where>
         order by id
     </select>
+
+    <!--添加房间-->
+    <insert id="addRoom" parameterType="com.young.domain.Room">
+        insert into t_room
+            (roomnum,roomtypeid,remark,photo,floorid,status,roomrequirement,roomdesc)
+        values
+            (#{roomnum},#{roomtypeid},#{remark},#{photo},#{floorid},#{status},#{roomrequirement},#{roomdesc})
+    </insert>
+
+    <!--修改房间-->
+    <update id="updateRoom" parameterType="com.young.domain.Room">
+        update t_room
+        <set>
+            <if test=""></if>
+        </set>
+    </update>
+
 </mapper>

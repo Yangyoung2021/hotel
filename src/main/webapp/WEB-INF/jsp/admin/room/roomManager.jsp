@@ -147,6 +147,8 @@
                                 <select name="status" id="status" lay-verify="required">
                                     <option value="">请选择房间状态</option>
                                     <option value="1">可预订</option>
+                                    <option value="2">已预定</option>
+                                    <option value="3">已入住</option>
                                 </select>
                             </div>
                         </div>
@@ -225,7 +227,7 @@
             for (let i = 0; i < data.length; i++) {
                 html += "<option value='"+data[i].id+"'>"+data[i].typeName+"</option>"
             }
-            $("#s_roomTypeId").append(html);
+            $("[name='roomtypeid']").append(html);
             //重新渲染下拉列表组件
             form.render("select");
         },"json");
@@ -238,7 +240,7 @@
             for (let i = 0; i < data.length; i++) {
                 html += "<option value='"+data[i].id+"'>"+data[i].name+"</option>"
             }
-            $("#s_floorId").append(html);
+            $("[name='floorid']").append(html);
             //重新渲染下拉列表组件
             form.render("select");
         },"json");
@@ -279,15 +281,24 @@
             mainIndex = layer.open({
                 type: 1,//打开类型
                 title: "添加房间",//窗口标题
-                area: ["800px", "400px"],//窗口宽高
+                area: ["800px", "600px"],//窗口宽高
                 content: $("#addOrUpdateWindow"),//引用的内容窗口
+                maxmin: true,
                 success: function () {
                     //清空表单数据
                     $("#dataFrm")[0].reset();
                     //添加的提交请求
                     url = "/admin/room/addRoom";
+                    //重置默认图片,注意：显示图片必须在图片名称前加上/hotel/show
+                    $(".thumbImg").attr("src","/hotel/show/images/defaultImg.jpg");
+                    //重置图片隐藏域的值
+                    $("#photo").val("images/defaultImg.jpg");
                 }
             });
+            //设置默认窗口最大化
+            layer.full(mainIndex);
+            //显示富文本域
+            layedit.build("roomdesc");
         }
 
         //监听表单提交事件
@@ -306,6 +317,23 @@
             return false;
         });
 
+
+        //渲染文件上传区域
+        upload.render({
+            elem:".thumbImg",//绑定元素
+            url: '/admin/file/uploadFile',//文件上传地址
+            acceptMime: 'image/*',//规定打开文件选择框时，筛选出的文件类型
+            field: 'attach',//文件上传的字段值，等同于input标签的name属性值，该值必须与控制器中的方法参数名一致
+            method: "post",//提交方式
+            //文件上传成功后的回调函数
+            done: function (res, index, upload) {
+                //设置图片回显路径
+                $(".thumbImg").attr("src",res.data.src);
+                $('.thumbBox').css("background", "#fff");
+                //给图片隐藏域赋值
+                $("#photo").val(res.imagePath);
+            }
+        });
 
 
     });

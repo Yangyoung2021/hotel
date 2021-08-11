@@ -260,7 +260,7 @@
         //渲染文件上传区域
         upload.render({
             elem:".thumbImg",//绑定元素
-            url: '/admin/roomType/uploadFile',//文件上传地址
+            url: '/admin/file/uploadFile',//文件上传地址
             acceptMime: 'image/*',//规定打开文件选择框时，筛选出的文件类型
             field: 'attach',//文件上传的字段值，等同于input标签的name属性值，该值必须与控制器中的方法参数名一致
             method: "post",//提交方式
