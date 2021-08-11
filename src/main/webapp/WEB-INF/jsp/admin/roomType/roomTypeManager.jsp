@@ -311,32 +311,34 @@
         }
 
         /**
-         * 删除部门数据
+         * 删除房型数据
          * @param data 当前行的数据
          */
         function deleteById(data){
-            //判断该部门是否存在员工
-            $.get("/admin/role/checkRoleEmployee",{"roleId":data.id},function (result){
+            //判断该房型是否存在房间
+            $.get("/admin/roomType/checkExistRoom",{"id":data.id},function (result){
                 if(result.exist){
-                    //存在员工，提示用户无法删除
+                    //存在房间，提示用户无法删除
                     layer.msg(result.message);
                 }else{
-                    //不存在员工，提示用户是否确定删除员工
-                    layer.confirm("确定要删<span style='color: red'>"+data.typeName+"</span>吗",function (index){
+                    //不存在房间，提示用户是否确定删除房型
+                    layer.confirm("确定要删<span style='color: red'>" + data.typeName + "</span>吗", function (index) {
                         //用户确定删除
-                        $.get("/admin/roomType/deleteRoomType",{"roleId":data.id},function (result){
-                            if (result.success){
+                        $.get("/admin/roomType/deleteRoomType", {"id": data.id}, function (result) {
+                            if (result.success) {
                                 //删除成功
                                 tableIns.reload();
                             }
                             //提示信息
                             layer.msg(result.message);
-                        },"json");
+                        }, "json");
                         layer.close(index);
                     });
                 }
             },"json");
+
         }
+
 
 
 

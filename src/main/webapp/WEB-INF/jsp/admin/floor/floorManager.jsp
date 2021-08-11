@@ -134,21 +134,19 @@
             return false;
         });
 
+        //----------------------------
         //监听头部工具栏事件
-        //toolbar是头部工具栏事件
-        //currentTableFilter是表格lay-filter过滤器的值
-        table.on(
-            "toolbar(currentTableFilter)",function (obj) {
-                switch (obj.event){
-                    case  "add": //添加按钮
-                        openAddWindow();//打开添加窗口
-                        break;
-                }
+        table.on("toolbar(currentTableFilter)",function (obj) {
+            switch (obj.event) {
+                case "add"://添加按钮
+                    openAddWindow();//打开添加窗口
+                    break;
             }
-        );
+        });
 
         let url;//提交地址
         let mainIndex;//打开窗口的索引
+
         /**
          * 打开添加窗口
          */
@@ -182,6 +180,7 @@
             //禁止页面刷新
             return false;
         });
+        //----------------------------
 
         //监听行工具栏事件
         table.on("tool(currentTableFilter)",function (obj) {
@@ -217,26 +216,33 @@
         }
 
         /**
-         * 删除员工数据
+         * 删除楼层数据
          * @param data 当前行的数据
          */
         function deleteById(data){
-            //删除员工
-            layer.confirm("确定要删<span style='color: red'>" + data.name + "</span>吗", function (index) {
-                //用户确定删除
-                $.get("/admin/floor/deleteFloor", {"id": data.id}, function (result) {
-                    if (result.success) {
-                        //删除成功
-                        tableIns.reload();
-                    }
-                    //提示信息
+            //判断该楼层是否存在房间
+            $.get("/admin/floor/checkExistRoom",{"id":data.id},function (result){
+                if(result.exist){
+                    //存在房间，提示用户无法删除
                     layer.msg(result.message);
-                }, "json");
-                layer.close(index);
-            });
+                }else{
+                    //不存在房间，提示用户是否确定删除楼层
+                    layer.confirm("确定要删<span style='color: red'>" + data.name + "</span>吗", function (index) {
+                        //用户确定删除
+                        $.get("/admin/floor/deleteFloor", {"id": data.id}, function (result) {
+                            if (result.success) {
+                                //删除成功
+                                tableIns.reload();
+                            }
+                            //提示信息
+                            layer.msg(result.message);
+                        }, "json");
+                        layer.close(index);
+                    });
+                }
+            },"json");
+
         }
-
-
     });
 </script>
 

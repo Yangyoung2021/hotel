@@ -34,4 +34,18 @@ public interface RoomService {
      * @return 删除结果
      */
     Integer deleteRoom(Integer id);
+
+    /**
+     * 根据楼层id查询房间
+     * @param floorId 楼层id
+     * @return 房间集合
+     */
+    List<Room> findRoomByFloorId(Integer floorId);
+
+    /**
+     * 根据房型id查询房间
+     * @param roomTypeId 房型id
+     * @return 房间集合
+     */
+    List<Room> findRoomByTypeId(Integer roomTypeId);
 }

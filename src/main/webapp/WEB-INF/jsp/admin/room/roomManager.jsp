@@ -300,7 +300,7 @@
             layer.full(mainIndex);
             //初始化富文本域
             detail = layedit.build("roomdesc",{
-                uploadImg:{
+                uploadImage:{
                     url:"/admin/file/uploadFile",//文件上传地址
                     type:"post"//提交方式
                 }
@@ -380,7 +380,7 @@
             // layer.full(mainIndex);
             //初始化富文本域
             detail = layedit.build("roomdesc",{
-                uploadImg:{
+                uploadImage:{
                     url:"/admin/file/uploadFile",//文件上传地址
                     type:"post"//提交方式
                 }
@@ -406,7 +406,6 @@
                 layer.close(index);
             });
         }
-
     });
 </script>
 

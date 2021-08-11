@@ -52,4 +52,22 @@ public class RoomServiceImpl implements RoomService {
     public Integer deleteRoom(Integer id) {
         return roomMapper.deleteRoom(id);
     }
+
+    /**
+     * 根据楼层id查询房间
+     * @param floorId 楼层id
+     * @return 房间集合
+     */
+    public List<Room> findRoomByFloorId(Integer floorId) {
+        return roomMapper.findRoomByFloorId(floorId);
+    }
+
+    /**
+     * 根据房型id查询房间
+     * @param roomTypeId 房型id
+     * @return 房间集合
+     */
+    public List<Room> findRoomByTypeId(Integer roomTypeId) {
+        return roomMapper.findRoomByTypeId(roomTypeId);
+    }
 }

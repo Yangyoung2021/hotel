@@ -56,4 +56,13 @@ public class RoomTypeServiceImpl implements RoomTypeService {
     public List<RoomType> findAll() {
         return roomTypeMapper.findAll();
     }
+
+    /**
+     * 根据id删除房型
+     * @param id 房型id
+     * @return 删除结果
+     */
+    public Integer deleteRoomType(Integer id) {
+        return roomTypeMapper.deleteRoomType(id);
+    }
 }

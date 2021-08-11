@@ -69,4 +69,14 @@
         delete from t_room where id = #{id}
     </delete>
 
+    <!--根据楼层id查询房间-->
+    <select id="findRoomByFloorId" parameterType="int" resultType="com.young.domain.Room">
+        select * from t_room where floorid = #{floorid}
+    </select>
+
+    <!--根据房型id查询房间-->
+    <select id="findRoomByTypeId" resultType="com.young.domain.Room">
+        select * from t_room where roomtypeid = #{roomtypeid}
+    </select>
+
 </mapper>

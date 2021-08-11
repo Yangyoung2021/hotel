@@ -33,4 +33,11 @@ public interface RoomTypeMapper {
      * @return 房型集合
      */
     List<RoomType> findAll();
+
+    /**
+     * 根据id删除房型
+     * @param id 房型id
+     * @return 删除结果
+     */
+    Integer deleteRoomType(Integer id);
 }

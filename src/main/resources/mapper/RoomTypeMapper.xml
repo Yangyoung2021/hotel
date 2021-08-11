@@ -56,4 +56,9 @@
         select * from t_room_type
     </select>
 
+    <!--删除房型-->
+    <delete id="deleteRoomType" parameterType="int">
+        delete from t_room_type where id = #{id}
+    </delete>
+
 </mapper>

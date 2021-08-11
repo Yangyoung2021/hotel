@@ -6,9 +6,11 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.young.domain.Floor;
 import com.young.service.FloorService;
+import com.young.service.RoomService;
 import com.young.utils.DataGridViewResult;
 import com.young.utils.SystemConstant;
 import com.young.vo.FloorVo;
+import org.omg.CORBA.ObjectHelper;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,6 +25,9 @@ public class FloorController {
 
     @Resource
     private FloorService floorService;
+
+    @Resource
+    private RoomService roomService;
 
     /**
      * 查询所有楼层信息
@@ -113,6 +118,8 @@ public class FloorController {
         return JSON.toJSONString(map);
     }
 
+
+
     /**
      * 空参查询所有楼层集合
      * @return json数据
@@ -120,6 +127,25 @@ public class FloorController {
     @RequestMapping("/findAll")
     public String findAll(){
         return JSON.toJSONString(floorService.findAll());
+    }
+
+    /**
+     * 判断当前楼层是否存在房间
+     * @param id 楼层id
+     * @return 回显信息
+     */
+    @RequestMapping("/checkExistRoom")
+    public String checkExistRoom(Integer id){
+        //创建回显信息的集合
+        Map<String,Object> map = new HashMap<String, Object>();
+        //判断查询结果
+        if (roomService.findRoomByFloorId(id).size() > 0){
+            //存在房间
+            map.put(SystemConstant.EXIST,true);
+            //提示用户不能删除
+            map.put(SystemConstant.MSG,"当前楼层存在房间，不能删除");
+        }
+        return JSON.toJSONString(map);
     }
 
 }

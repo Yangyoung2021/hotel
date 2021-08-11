@@ -4,21 +4,15 @@ import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.young.domain.RoomType;
+import com.young.service.RoomService;
 import com.young.service.RoomTypeService;
 import com.young.utils.DataGridViewResult;
 import com.young.utils.SystemConstant;
-import com.young.utils.UUIDUtils;
 import com.young.vo.RoomTypeVo;
-import org.apache.commons.io.FilenameUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +23,9 @@ public class RoomTypeController {
 
     @Resource
     private RoomTypeService roomTypeService;
+
+    @Resource
+    private RoomService roomService;
 
     /**
      * 分页查询所有房型
@@ -103,6 +100,49 @@ public class RoomTypeController {
     @RequestMapping("/findAll")
     public String findAll(){
         return JSON.toJSONString(roomTypeService.findAll());
+    }
+
+    /**
+     * 根据房型id查询房间
+     * @param id 房型id
+     * @return 回显数据
+     */
+    @RequestMapping("/checkExistRoom")
+    public String checkExistRoom(Integer id){
+        //创建返回数据的集合
+        Map<String,Object> map = new HashMap<String, Object>();
+        //调用方法判断结果
+        if (roomService.findRoomByTypeId(id).size() > 0){
+            //存在房间
+            map.put(SystemConstant.EXIST,true);
+            //提示用户不能删除
+            map.put(SystemConstant.MSG,"当前房型存在房间，不能删除");
+        }
+        return JSON.toJSONString(map);
+    }
+
+    /**
+     * 根据id删除房型
+     * @param id 房型id
+     * @return 回显信息
+     */
+    @RequestMapping("/deleteRoomType")
+    public String deleteRoomType(Integer id){
+        //创建回显信息集合
+        Map<String,Object> map = new HashMap<String, Object>();
+        //判断结果
+        if (roomTypeService.deleteRoomType(id) > 0){
+            //成功
+            map.put(SystemConstant.SUCCESS,true);
+            //返回信息
+            map.put(SystemConstant.MSG,"删除成功");
+        }else {
+            //失败
+            map.put(SystemConstant.SUCCESS,false);
+            //返回信息
+            map.put(SystemConstant.MSG,"删除失败");
+        }
+        return JSON.toJSONString(map);
     }
 
 }
