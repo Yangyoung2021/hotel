@@ -127,7 +127,7 @@
                         </div>
                         <div class="layui-col-md3 layui-col-xs5">
                             <div class="layui-upload-list thumbBox mag0 magt3">
-                                <input type="hidden" name="photo" id="photo" value="/images/defaultimg.jpg">
+                                <input type="hidden" name="photo" id="photo" value="/images/defaultImg.jpg">
                                 <img class="layui-upload-img thumbImg" src="/hotel/show/images/defaultImg.jpg">
                             </div>
                         </div>
@@ -274,6 +274,7 @@
 
         let url;//提交地址
         let mainIndex;//打开窗口的索引
+        let detail;//富文本域对象
         /**
          * 打开添加窗口
          */
@@ -298,12 +299,14 @@
             //设置默认窗口最大化
             layer.full(mainIndex);
             //显示富文本域
-            layedit.build("roomdesc");
+            detail = layedit.build("roomdesc");
         }
 
         //监听表单提交事件
         form.on("submit(doSubmit)",function (data) {
-            $.post(url,data.field,function(result){
+            //将富文本编辑器同步到文本编辑器中
+            layedit.sync(detail);
+            $.post(url,$("#dataFrm").serialize(),function(result){
                 if(result.success){
                     //刷新数据表格
                     tableIns.reload();
@@ -316,7 +319,6 @@
             //禁止页面刷新
             return false;
         });
-
 
         //渲染文件上传区域
         upload.render({
@@ -335,6 +337,61 @@
             }
         });
 
+        //监听行工具栏事件
+        table.on("tool(currentTableFilter)",function (obj) {
+                console.log(obj);
+                switch (obj.event){
+                    case  "edit": //编辑按钮
+                        openUpdateWindow(obj.data);//打开编辑窗口
+                        break;
+                    case  "delete": //删除按钮
+                        deleteById(obj.data);
+                        break;
+                }
+            }
+        );
+
+        /**
+         * 打开修改窗口
+         */
+        function openUpdateWindow(data) {
+            mainIndex = layer.open({
+                type: 1,//打开类型
+                title: "添加角色",//窗口标题
+                area: ["800px", "600px"],//窗口宽高
+                content: $("#addOrUpdateWindow"),//引用的内容窗口
+                success: function () {
+                    //数据回显
+                    form.val("dataFrm",data)
+                    //添加的提交请求
+                    url = "/admin/room/updateRoom";
+                    //图片回显
+                    $(".thumbImg").attr("src","/hotel/show/"+data.photo);
+                    //隐藏值回显
+                    $("#photo").val(data.photo)
+                }
+            });
+        }
+
+        /**
+         * 删除房间数据
+         * @param data 当前行的数据
+         */
+        function deleteById(data){
+            //提示用户是否确定删除房间
+            layer.confirm("确定要删<span style='color: red'>"+data.typename+"</span>吗",function (index){
+                //用户确定删除
+                $.get("/admin/room/deleteRoom",{"id":data.id},function (result){
+                    if (result.success){
+                        //删除成功
+                        tableIns.reload();
+                    }
+                    //提示信息
+                    layer.msg(result.message);
+                },"json");
+                layer.close(index);
+            });
+        }
 
     });
 </script>

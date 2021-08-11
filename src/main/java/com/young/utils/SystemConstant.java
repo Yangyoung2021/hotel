@@ -31,4 +31,17 @@ public interface SystemConstant {
      * 默认密码
      */
     String DEFAULT_PWD = "123456";
+    /**
+     * 文件上传目录地址
+     */
+    String UPLOAD_PATH = "D:/fileTransmit/ssm/hotel/upload/";
+
+    /**
+     * 网络绝对路径添加的虚拟目录
+     */
+    String VIRTUAL_PATH = "/hotel/show/";
+    /**
+     * 文件夹名称命名规则
+     */
+    String DIRECTORY_NAME = "yyyy-MM-dd";
 }

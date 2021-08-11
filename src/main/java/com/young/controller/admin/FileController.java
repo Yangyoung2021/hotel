@@ -1,6 +1,7 @@
 package com.young.controller.admin;
 
 import com.alibaba.fastjson.JSON;
+import com.young.utils.SystemConstant;
 import com.young.utils.UUIDUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,9 +37,9 @@ public class FileController {
             //5.将文件重命名
             String newFileName = UUIDUtils.UUIDRandom() + "." + file_extension;
             //6.创建文件保存父级地址
-            String uploadPath = "D:/fileTransmit/ssm/hotel/upload/";
+            String uploadPath = SystemConstant.UPLOAD_PATH;
             //7.将每天的文件作为一个文件夹放置
-            String dataPath = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+            String dataPath = new SimpleDateFormat(SystemConstant.DIRECTORY_NAME).format(new Date());
             //8.组装最终文件名
             String finalFileName = dataPath + "/" + newFileName;
             //9.创建文件对象，用来直接保存数据
@@ -54,7 +55,7 @@ public class FileController {
                 map.put("code",0);//状态码
                 map.put("msg","文件上传成功");//文件上传提示信息
                 Map<String,Object> dataMap = new HashMap<String, Object>();
-                dataMap.put("src","/hotel/show/"+finalFileName);//文件数据
+                dataMap.put("src",SystemConstant.VIRTUAL_PATH+finalFileName);//文件数据
                 map.put("data",dataMap);
                 map.put("imagePath",finalFileName);//隐藏域的值
             } catch (IOException e) {

@@ -36,8 +36,32 @@
     <update id="updateRoom" parameterType="com.young.domain.Room">
         update t_room
         <set>
-            <if test=""></if>
+            <if test="roomnum != null and roomnum != '' ">
+                roomnum = #{roomnum},
+            </if>
+            <if test="roomtypeid != null">
+                roomtypeid = #{roomtypeid},
+            </if>
+            <if test="remark != null and remark != '' ">
+                remark = #{remark},
+            </if>
+            <if test="photo != null and photo != '' ">
+                photo = #{photo},
+            </if>
+            <if test="floorid != null">
+                floorid = #{floorid},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="roomrequirement != null and roomrequirement != '' ">
+                roomrequirement = #{roomrequirement},
+            </if>
+            <if test="roomdesc != null and roomdesc != '' ">
+                roomdesc = #{roomdesc},
+            </if>
         </set>
+            where id = #{id}
     </update>
 
 </mapper>

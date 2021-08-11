@@ -98,7 +98,7 @@
                         </div>
                         <div class="layui-col-md3 layui-col-xs5">
                             <div class="layui-upload-list thumbBox mag0 magt3">
-                                <input type="hidden" name="photo" id="photo" value="/images/defaultimg.jpg">
+                                <input type="hidden" name="photo" id="photo" value="/images/defaultImg.jpg">
                                 <img class="layui-upload-img thumbImg" src="/hotel/show/images/defaultImg.jpg">
                             </div>
                         </div>
