@@ -34,4 +34,10 @@ public interface FloorMapper {
      * @return 修改结果
      */
     Integer updateFloor(Floor floor);
+
+    /**
+     * 空参查询所有楼层集合
+     * @return 楼层集合
+     */
+    List<Floor> findAll();
 }

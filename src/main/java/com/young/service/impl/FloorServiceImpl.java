@@ -52,4 +52,12 @@ public class FloorServiceImpl implements FloorService {
     public Integer updateFloor(Floor floor) {
         return floorMapper.updateFloor(floor);
     }
+
+    /**
+     * 空参查询所有楼层集合
+     * @return 楼层集合
+     */
+    public List<Floor> findAll() {
+        return floorMapper.findAll();
+    }
 }

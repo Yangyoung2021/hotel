@@ -33,6 +33,27 @@ public class RoomTypeServiceImpl implements RoomTypeService {
      * @return 添加结果
      */
     public Integer addRoomType(RoomType roomType) {
+        //可用房间数默认是全部房间数量
+        roomType.setAvilablenum(roomType.getRoomnum());
+        //设置已入住数量为0
+        roomType.setLivednum(0);
         return roomTypeMapper.addRoomType(roomType);
+    }
+
+    /**
+     * 修改房型
+     * @param roomType 要修改的房型
+     * @return 修改结果
+     */
+    public Integer updateRoomType(RoomType roomType) {
+        return roomTypeMapper.updateRoomType(roomType);
+    }
+
+    /**
+     * 空参查询所有房型
+     * @return 房型集合
+     */
+    public List<RoomType> findAll() {
+        return roomTypeMapper.findAll();
     }
 }

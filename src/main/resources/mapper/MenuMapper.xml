@@ -19,7 +19,7 @@
         select * from sys_menu
         <where>
             <if test="id != null">
-                id = #{id} or pid = #{id}
+                and id = #{id} or pid = #{id}
             </if>
         </where>
         order by id

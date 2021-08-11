@@ -20,4 +20,17 @@ public interface RoomTypeMapper {
      * @return 添加结果
      */
     Integer addRoomType(RoomType roomType);
+
+    /**
+     * 修改房型
+     * @param roomType 要修改的房型
+     * @return 修改结果
+     */
+    Integer updateRoomType(RoomType roomType);
+
+    /**
+     * 空参查询所有房型
+     * @return 房型集合
+     */
+    List<RoomType> findAll();
 }

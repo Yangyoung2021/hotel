@@ -201,7 +201,7 @@
             return false;
         });
 
-        //监听工具栏事件
+        //监听行工具栏事件
         table.on("tool(currentTableFilter)",function (obj) {
                 console.log(obj);
                 switch (obj.event){

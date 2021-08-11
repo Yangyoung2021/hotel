@@ -128,8 +128,6 @@ public class EmployeeController {
      */
     @RequestMapping("/deleteEmployee")
     public String deleteEmployee(Integer eid){
-        System.out.println("------------------");
-        System.out.println(eid);
         //创建返回数据的聚合
         Map<String,Object> map = new HashMap<String, Object>();
         //判断删除结果

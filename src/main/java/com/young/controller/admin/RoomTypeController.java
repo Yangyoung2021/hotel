@@ -37,8 +37,6 @@ public class RoomTypeController {
      */
     @RequestMapping("/findAllRoomTypeByPage")
     public DataGridViewResult findAllRoomTypeByPage(RoomTypeVo roomTypeVo){
-        System.out.println("---------------------------");
-        System.out.println(roomTypeVo.getTypeName());
         //将分页信息赋给分页助手
         PageHelper.startPage(roomTypeVo.getPage(),roomTypeVo.getLimit());
         //获取房型集合
@@ -119,4 +117,38 @@ public class RoomTypeController {
         }
         return JSON.toJSONString(map);
     }
+
+    /**
+     * 修改房型
+     * @param roomType 要修改的房型
+     * @return 回显信息
+     */
+    @RequestMapping("/updateRoomType")
+    public String updateRoomType(RoomType roomType){
+        //创建回显信息用的集合
+        Map<String,Object> map = new HashMap<String, Object>();
+        //判段结果
+        if (roomTypeService.updateRoomType(roomType) > 0){
+            //添加成功
+            map.put(SystemConstant.SUCCESS,true);
+            //返回信息
+            map.put(SystemConstant.MSG,"修改成功");
+        }else{
+            //添加失败
+            map.put(SystemConstant.SUCCESS,false);
+            //返回信息
+            map.put(SystemConstant.MSG,"修改失败");
+        }
+        return JSON.toJSONString(map);
+    }
+
+    /**
+     * 空参查询所有房型
+     * @return json数据
+     */
+    @RequestMapping("/findAll")
+    public String findAll(){
+        return JSON.toJSONString(roomTypeService.findAll());
+    }
+
 }

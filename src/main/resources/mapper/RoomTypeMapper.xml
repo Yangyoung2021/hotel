@@ -9,14 +9,51 @@
         select * from t_room_type
         <where>
             <if test="typeName != null and typeName != '' ">
-                typeName like concat('%',#{typeName},'%')
+                and typeName like concat('%',#{typeName},'%')
             </if>
         </where>
     </select>
 
     <!--添加房型-->
     <insert id="addRoomType" parameterType="com.young.domain.RoomType">
-        insert into t_room_type (typename,status,remark,price,livenum,bednum,roomnum,photo)
-        values(#{typeName},#{status},#{remark},#{price},#{livenum},#{bednum},#{roomnum},#{photo})
+        insert into t_room_type (typename,status,remark,price,livenum,bednum,roomnum,
+                                 photo,reservednum,avilablenum,livednum)
+        values(#{typeName},#{status},#{remark},#{price},#{livenum},#{bednum},#{roomnum},
+                                #{photo},#{reservednum},#{avilablenum},#{livednum})
     </insert>
+
+    <!--修改房型-->
+    <update id="updateRoomType" parameterType="com.young.domain.RoomType">
+        update t_room_type
+        <set>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="typeName != null and typeName != '' ">
+                typeName = #{typeName},
+            </if>
+            <if test="photo != null and photo != '' ">
+                photo = #{photo},
+            </if>
+            <if test="remark != null and remark != '' ">
+                remark = #{remark},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+            <if test="livenum != null">
+                livenum = #{livenum},
+            </if>
+            <if test="bednum != null">
+                bednum = #{bednum},
+            </if>
+        </set>
+            where id = #{id}
+    </update>
+
+    <!--空参查询所有房型-->
+    <select id="findAll" resultType="com.young.domain.RoomType">
+        select * from t_room_type
+    </select>
+
 </mapper>

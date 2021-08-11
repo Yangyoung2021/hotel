@@ -8,7 +8,7 @@
         select * from t_floor
         <where>
             <if test="name != null and name != '' ">
-                name like concat('%',#{name},'%')
+                and name like concat('%',#{name},'%')
             </if>
         </where>
     </select>
@@ -36,5 +36,10 @@
     <delete id="deleteFloor" parameterType="int">
         delete from t_floor where id= #{id}
     </delete>
+
+    <!--空参查询所有楼层-->
+    <select id="findAll" resultType="com.young.domain.Floor">
+        select * from t_floor
+    </select>
 
 </mapper>

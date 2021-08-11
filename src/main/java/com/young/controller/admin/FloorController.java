@@ -4,7 +4,6 @@ package com.young.controller.admin;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.young.domain.Employee;
 import com.young.domain.Floor;
 import com.young.service.FloorService;
 import com.young.utils.DataGridViewResult;
@@ -112,6 +111,15 @@ public class FloorController {
             map.put(SystemConstant.MSG,"删除失败");
         }
         return JSON.toJSONString(map);
+    }
+
+    /**
+     * 空参查询所有楼层集合
+     * @return json数据
+     */
+    @RequestMapping("/findAll")
+    public String findAll(){
+        return JSON.toJSONString(floorService.findAll());
     }
 
 }
