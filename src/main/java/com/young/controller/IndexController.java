@@ -1,6 +1,7 @@
 package com.young.controller;
 
 import com.young.domain.Floor;
+import com.young.domain.Room;
 import com.young.domain.RoomType;
 import com.young.service.FloorService;
 import com.young.service.RoomService;
@@ -37,7 +38,8 @@ public class IndexController {
         //将楼层信息放入session域
         session.setAttribute("floorList",floorList);
         //获取所有房间
-
+        List<Room> roomList = roomService.findAll();
+        session.setAttribute("roomList",roomList);
         return "forward:/home.jsp";
     }
 

@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <!DOCTYPE html>
 <html lang="en" class="fly-html-layui fly-html-store">
 <head>
@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/statics/front/css/global(1).css" charset="utf-8">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/statics/front/css/store.css" charset="utf-8">
     <link rel="icon" href="${pageContext.request.contextPath}/statics/front/images/favicon.ico">
-    <title>酒店管理系统</title>
+    <title>首页-酒店管理系统</title>
 <body>
 <!-- 顶部start -->
 <div class="layui-header header header-store" style="background-color: #393D49;">
@@ -23,10 +23,10 @@
         <ul class="layui-nav" id="layui-nav-userinfo">
             <li data-id="index" class="layui-nav-item layui-hide-xs"><a class="fly-case-active" data-type="toTopNav"
                                                                                    href="/home.jsp">首页</a></li>
-            <li data-id="room" class="layui-nav-item layui-hide-xs"><a class="fly-case-active"
+            <li data-id="room" class="layui-nav-item layui-hide-xs layui-this" ><a class="fly-case-active"
                                                                        data-type="toTopNav"
                                                                        href="/hotelList/toRoomList">房间</a></li>
-            <li data-id="login" class="layui-nav-item layui-hide-xs layui-this"><a class="fly-case-active" data-type="toTopNav"
+            <li data-id="login" class="layui-nav-item layui-hide-xs "><a class="fly-case-active" data-type="toTopNav"
                                                                          href="/login.jsp">登录</a></li>
             <li data-id="register" class="layui-nav-item layui-hide-xs "><a class="fly-case-active" data-type="toTopNav"
                                                                             href="/register.jsp">注册</a></li>
@@ -52,50 +52,66 @@
         </form>
     </div>
     <!--搜索 end-->
+
+
+
+
 </div>
 <!-- 中间区域结束 -->
 
-<!-- 登录start -->
+<!-- 房间详情start -->
 <div class="layui-container shopdata">
     <div class="layui-card shopdata-intro">
+        <div class="layui-card-header">
+				<span class="layui-breadcrumb layui-hide-xs" style="visibility: visible;">
+				<a href="/index/homeIndex">酒店首页</a><span lay-separator="">/</span>
+						           <a href="JavaScript:void(0);" id="floorNumber">酒店${room.floorname}</a><span lay-separator="">/</span>
 
-        <div class=" login-content">
-            <!--登录 start-->
-            <div class="login-bg">
-                <div class="login-cont w1200">
-                    <div class="form-box">
-                        <form class="layui-form" action="">
-                            <legend>前台用户登录</legend>
-                            <div class="layui-form-item">
-                                <div class="layui-inline iphone">
-                                    <div class="layui-input-inline">
-                                        <i class="layui-icon layui-icon-user iphone-icon"></i>
-                                        <input type="tel" name="loginName" id="phone" lay-verify="required" lay-reqText="请输入登录用户名" placeholder="请输入登录用户名" autocomplete="off" class="layui-input">
-                                    </div>
-                                </div>
-                                <div class="layui-inline iphone">
-                                    <div class="layui-input-inline">
-                                        <i class="layui-icon layui-icon-password iphone-icon"></i>
-                                        <input id="pnum" type="password" name="password" lay-verify="required" lay-reqText="请输入登录密码" placeholder="请输入登录密码" autocomplete="off" class="layui-input">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="layui-form-item login-btn">
-                                <div class="layui-input-block">
-                                    <button class="layui-btn" lay-submit="" lay-filter="login" style="background-color: #009688">登录</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <!--登录 end-->
+						 <a><cite>房间详情</cite></a> </span>
 
         </div>
-    </div>
+        <div class="layui-card-body layui-row">
+            <div class="layui-col-md6">
+                <div class="intro-img photos"> <img id="coverImg" src="/hotel/show/${room.photo}" alt="产品封面" layer-index="0"> </div>
+            </div>
+            <div class="layui-col-md6">
+                <div class="intro-txt">
+                    <h1 class="title" id="roomName">${room.typename}</h1>
+                    <input type="hidden" id="id" name="id" value="1">
+                    <div class="store-attrs">
+                        <div class="summary">
+                            <p class="reference"><span>房间号</span> <span id="roomNumber">${room.roomnum}</span></p>
+                            <p class="reference"><span>床　型</span> <span id="bedType">${room.bednum}张单人床</span></p>
+                            <p class="reference"><span>宽　带</span> <span id="broadband">免费wifi</span></p>
+                            <p class="reference"><span>标准价</span> ￥<span id="standardPrice" style="color: pink">${room.price}</span></p>
+                            <p class="activity"><span>会员价</span><strong class="price"><i>￥${room.price*0.85}</i><span id="memberPrice"></span></strong></p>
+                            <p class="activity"><span>状&#12288;态</span>
+                            <strong class="status">
 
+                                 <span>${room.statusStr}</span>
+
+                                </strong>
+
+                            </p>
+                        </div>
+                    </div>
+
+                    <p class="store-detail-active" id="shopEvent"> <a  href="javascript:;" id="bookRoom" onclick=bookNow() data-type="memberReserveHotel" class="store-bg-orange fly-memberReserveHotel">
+                        <input type="hidden" id="currentUser" value="${sessionScope.currentUser}">
+                        <i class="layui-icon layui-icon-dollar"></i>立即预定</a> </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-card shopdata-content">
+        <div class="layui-card-body detail-body layui-text">
+            <div class="layui-elem-quote"> ${room.roomrequirement}</div>
+            <div id="roomContent"><p><img src="/hotel/show/${room.roomdesc}" style="max-width:100%;"><br></p></div>
+        </div>
+    </div>
 </div>
-<!-- 登录end -->
+<!-- 房间详情end -->
+
 
 <!-- 底部 -->
 <div class="fly-footer">
@@ -128,22 +144,24 @@
             ,height: '460' //设置容器高度
             ,arrow: 'always' //始终显示箭头
         });
-
-        form.on("submit(login)",function (data) {
-            $.post("/user/login",data.field,function (result) {
-                if (result.success){
-                    //登录成功，跳转页面
-                    location.href = "/index/homeIndex";
-                }else{
-                    // alert("登陆失败")
-                    layer.msg(result.message,{icon:5})
-                }
-            },"json");
-            return false;
-        })
-
-
     });
+
+    function bookNow() {
+        //获取隐藏域的user信息
+        // let userId = $("#bookRoom").val();
+        let user = document.getElementById("bookRoom").value;
+        alert(user);
+        // alert(userId);
+        if (user === "" || user.length === 0){
+            alert("您还没有登录，请先登录！");
+            location.href = "/login.jsp";
+        }else{
+            alert("出来");
+        }
+    }
+
+
+
 </script>
 <!-- 脚本结束 -->
 <ul class="layui-fixbar">

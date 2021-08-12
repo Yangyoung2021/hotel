@@ -18,6 +18,26 @@ public class Room {
     private String floorname;
     //房间状态描述
     private String statusStr;
+    //房间价格
+    private double price;
+    //床数量
+    private Integer bednum;
+
+    public Integer getBednum() {
+        return bednum;
+    }
+
+    public void setBednum(Integer bednum) {
+        this.bednum = bednum;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
 
     public String getStatusStr() {
         if (status != null){

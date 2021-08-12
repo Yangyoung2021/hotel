@@ -22,10 +22,10 @@
         <div class="layui-form component" lay-filter="LAY-site-header-component"></div>
         <ul class="layui-nav" id="layui-nav-userinfo">
             <li data-id="index" class="layui-nav-item layui-hide-xs"><a class="fly-case-active" data-type="toTopNav"
-                                                                                   href="JavaScript:void(0);">首页</a></li>
+                                                                                   href="/home.jsp">首页</a></li>
             <li data-id="room" class="layui-nav-item layui-hide-xs"><a class="fly-case-active"
                                                                        data-type="toTopNav"
-                                                                       href="/home.jsp">房间</a></li>
+                                                                       href="/hotelList/toRoomList">房间</a></li>
             <li data-id="login" class="layui-nav-item layui-hide-xs "><a class="fly-case-active" data-type="toTopNav"
                                                                          href="/login.jsp">登录</a></li>
             <li data-id="register" class="layui-nav-item layui-hide-xs layui-this"><a class="fly-case-active" data-type="toTopNav"

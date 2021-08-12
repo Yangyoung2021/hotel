@@ -65,7 +65,7 @@ public class UserController {
             //登录成功
             map.put(SystemConstant.SUCCESS,true);
             //将信息放入session域
-            session.setAttribute(SystemConstant.LOGIN_USER,loginUser);
+            session.setAttribute(SystemConstant.FRONT_LOGIN_USER,loginUser);
         }else{
             //登录失败
             map.put(SystemConstant.SUCCESS,false);

@@ -55,4 +55,18 @@ public interface RoomMapper {
      * @return 房间使用状态
      */
     Integer checkStatus(Integer id);
+
+    /**
+     * 查询所有房间
+     * @return 房间集合
+     */
+    List<Room> findAll();
+
+    /**
+     * 查询房间详情
+     * @param id 房间id
+     * @return 查询的房间
+     */
+    Room findByRoomId(Integer id);
+
 }

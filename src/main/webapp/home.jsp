@@ -23,13 +23,13 @@
         <div class="layui-form component" lay-filter="LAY-site-header-component"></div>
         <ul class="layui-nav" id="layui-nav-userinfo">
             <li data-id="index" class="layui-nav-item layui-hide-xs layui-this">
-                <a class="fly-case-active" data-type="toTopNav" href="JavaScript:void(0);">首页</a>
+                <a class="fly-case-active" data-type="toTopNav" href="/home.jsp">首页</a>
             </li>
             <li data-id="room" class="layui-nav-item layui-hide-xs">
-                <a class="fly-case-active" data-type="toTopNav" href="JavaScript:void(0);">房间</a>
+                <a class="fly-case-active" data-type="toTopNav" href="/hotelList/toRoomList">房间</a>
             </li>
             <li data-id="login" class="layui-nav-item layui-hide-xs ">
-                <a class="fly-case-active" data-type="toTopNav" href="/login.jsp">登入</a>
+                <a class="fly-case-active" data-type="toTopNav" href="/login.jsp">登录</a>
             </li>
             <li data-id="register" class="layui-nav-item layui-hide-xs ">
                 <a class="fly-case-active" data-type="toTopNav" href="/register.jsp">注册</a>
@@ -67,7 +67,7 @@
                     <dt style="background-color: #009688"><a href="lists.html" target="_blank">房间分类</a></dt>
                     <c:forEach var="roomType" items="${roomTypeList}">
                         <dd data-id="${roomType.id}">
-                            <a class="fly-case-active" href="JavaScript:void(0);" data-type="toRoomTypeList">${roomType.typeName}</a>
+                            <a class="fly-case-active" href="/hotelList/toRoomListById/${roomType.id}" data-type="toRoomTypeList">${roomType.typeName}</a>
                         </dd>
                     </c:forEach>
                 </dl>
@@ -140,34 +140,17 @@
                         <div class="layui-container">
                             <p class="temp-title-cn"><span></span>酒店${f.name}<span></span></p>
                             <div class="layui-row layui-col-space20">
-                                <div data-id="1" class="layui-col-xs6 layui-col-md3">
-                                    <a class="template store-list-box fly-case-active" href="JavaScript:void(0);" data-type="toRoomInfo">
-                                        <img src="http://qiniu.goodym.cn/950f5d78-d2a2-4e60-843a-60cbd0bd2651.jpg" class="store-list-cover">
-                                        <h2 class="layui-elip">经济舒适单人间</h2>
-                                        <p class="price"> <span title="金额"> ￥1 </span> <span title="房号" style="color:  #fff;background: #0e88cc;padding: 3px;text-align: center;border: 1px solid #4cffb3;font-size: 13px;"> NO.100 </span></p>
-                                    </a>
-                                </div>
-                                <div data-id="7" class="layui-col-xs6 layui-col-md3">
-                                    <a class="template store-list-box fly-case-active" href="JavaScript:void(0);" data-type="toRoomInfo">
-                                        <img src="http://qiniu.goodym.cn/47e28094-4ebf-40b3-9ea3-55f77c71c865.jpg" class="store-list-cover">
-                                        <h2 class="layui-elip">商务双床房</h2>
-                                        <p class="price"> <span title="金额"> ￥1 </span> <span title="房号" style="color:  #fff;background: #0e88cc;padding: 3px;text-align: center;border: 1px solid #4cffb3;font-size: 13px;"> NO.101 </span></p>
-                                    </a>
-                                </div>
-                                <div data-id="13" class="layui-col-xs6 layui-col-md3">
-                                    <a class="template store-list-box fly-case-active" href="JavaScript:void(0);" data-type="toRoomInfo">
-                                        <img src="http://qiniu.goodym.cn/acfae30b-e1d6-4d94-b7d4-fccba740fe62.jpg" class="store-list-cover">
-                                        <h2 class="layui-elip">普通标准间</h2>
-                                        <p class="price"> <span title="金额"> ￥1 </span> <span title="房号" style="color:  #fff;background: #0e88cc;padding: 3px;text-align: center;border: 1px solid #4cffb3;font-size: 13px;"> NO.102 </span></p>
-                                    </a>
-                                </div>
-                                <div data-id="19" class="layui-col-xs6 layui-col-md3">
-                                    <a class="template store-list-box fly-case-active" href="JavaScript:void(0);" data-type="toRoomInfo">
-                                        <img src="http://qiniu.goodym.cn/7e45a065-8ffa-4044-9ff4-4eeba5d4c6a4.jpg" class="store-list-cover">
-                                        <h2 class="layui-elip">豪华总统套房</h2>
-                                        <p class="price"> <span title="金额"> ￥1 </span> <span title="房号" style="color:  #fff;background: #0e88cc;padding: 3px;text-align: center;border: 1px solid #4cffb3;font-size: 13px;"> NO.103 </span></p>
-                                    </a>
-                                </div>
+                                <c:forEach var="room" items="${roomList}">
+                                    <c:if test="${room.floorid == f.id}">
+                                    <div data-id="${room.id}" class="layui-col-xs6 layui-col-md3">
+                                        <a class="template store-list-box fly-case-active" href="/detail/roomDetail/${room.id}" data-type="toRoomInfo">
+                                            <img src="/hotel/show/${room.photo}" class="store-list-cover">
+                                            <h2 class="layui-elip">${room.typename}</h2>
+                                            <p class="price"> <span title="金额"> ￥${room.price} </span> <span title="房号" style="color:  #fff;background: #0e88cc;padding: 3px;text-align: center;border: 1px solid #4cffb3;font-size: 13px;"> NO.${room.roomnum} </span></p>
+                                        </a>
+                                    </div>
+                                    </c:if>
+                                </c:forEach>
                             </div>
                         </div>
                     </div>

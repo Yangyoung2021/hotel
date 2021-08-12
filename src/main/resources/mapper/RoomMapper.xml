@@ -4,7 +4,7 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.young.dao.RoomMapper">
     <select id="getRoomListByPage" parameterType="com.young.vo.RoomVo" resultType="com.young.domain.Room">
-        SELECT t1.*, t2.`name` as floorName ,t3.`typeName` FROM t_room t1
+        SELECT t1.*, t2.`name` as floorName ,t3.`typeName`,t3.price FROM t_room t1
         INNER JOIN t_floor t2 ON t1.`floorId` = t2.`id`
         INNER JOIN t_room_type t3 ON t1.`roomTypeId` = t3.`id`
         <where>
@@ -82,6 +82,19 @@
     <!--查询房间使用状态-->
     <select id="checkStatus" parameterType="int" resultType="int">
         select status from t_room where id = #{id}
+    </select>
+
+    <!--空参查询所有房间-->
+    <select id="findAll" resultType="com.young.domain.Room">
+        select t1.* ,t2.typeName,t2.price from t_room t1 inner join t_room_type t2 on t1.roomtypeid = t2.id
+    </select>
+
+    <!--查询房间详情页面-->
+    <select id="findByRoomId" resultType="com.young.domain.Room">
+        SELECT t1.*,t2.`price`,t2.`bedNum`,t2.`typeName`,t3.name floorname FROM t_room t1
+                INNER JOIN t_room_type t2 ON t1.`roomTypeId` = t2.`id`
+                inner join t_floor t3 on t1.floorid = t3.id
+                WHERE t1.id = #{roomId}
     </select>
 
 </mapper>

@@ -35,6 +35,15 @@ public class PasswordUtil {
         System.out.println("加密盐值："+salt);
         System.out.println("加密后的密码："+ PasswordUtil.md5(password,salt,5));
         System.out.println(System.getProperty("file.encoding"));
+//        test();
     }
+
+//    public static void test(){
+//        for (int i = 0; i < 10; i++) {
+//            int j = 1;
+//            j = j++;
+//            System.out.println("第"+i+"次的结果"+j);
+//        }
+//    }
 
 }

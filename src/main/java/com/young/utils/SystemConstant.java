@@ -44,4 +44,8 @@ public interface SystemConstant {
      * 文件夹名称命名规则
      */
     String DIRECTORY_NAME = "yyyy-MM-dd";
+    /**
+     * 前台登录用户
+     */
+    String FRONT_LOGIN_USER = "currentUser";
 }

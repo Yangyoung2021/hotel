@@ -79,4 +79,21 @@ public class RoomServiceImpl implements RoomService {
     public Integer checkStatus(Integer id) {
         return roomMapper.checkStatus(id);
     }
+
+    /**
+     * 查询所有房间
+     * @return 房间集合
+     */
+    public List<Room> findAll() {
+        return roomMapper.findAll();
+    }
+
+    /**
+     * 查询房间详情
+     * @param id 房间id
+     * @return 查询的房间
+     */
+    public Room findByRoomId(Integer id) {
+        return roomMapper.findByRoomId(id);
+    }
 }
