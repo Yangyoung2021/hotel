@@ -6,8 +6,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,6 +29,12 @@ public class RoomDetailController {
         //将房间信息放入模型
         model.addAttribute("room",detailRoom);
         return "detail";
+    }
+
+    @RequestMapping("/checkLogin")
+    @ResponseBody
+    public Boolean checkLogin(HttpSession session){
+        return session.getAttribute("currentUser") == null;
     }
 
 }

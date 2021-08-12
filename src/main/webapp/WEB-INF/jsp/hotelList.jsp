@@ -64,7 +64,7 @@
             <div class="layui-card-header">
                 <span class="layui-breadcrumb" style="visibility: visible;">
                     <a href="/index/homeIndex">酒店首页</a><span lay-separator="">/</span>
-                    <a href="../hotel/lists.html">类别</a><span lay-separator="">/</span>
+                    <a href="/index/homeIndex">类别</a><span lay-separator="">/</span>
                     <a href="/hotelList/toRoomList"><cite>全部</cite></a>
                 </span>
             </div>

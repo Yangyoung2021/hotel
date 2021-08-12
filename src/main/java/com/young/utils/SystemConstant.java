@@ -40,10 +40,12 @@ public interface SystemConstant {
      * 网络绝对路径添加的虚拟目录
      */
     String VIRTUAL_PATH = "/hotel/show/";
+
     /**
      * 文件夹名称命名规则
      */
     String DIRECTORY_NAME = "yyyy-MM-dd";
+
     /**
      * 前台登录用户
      */

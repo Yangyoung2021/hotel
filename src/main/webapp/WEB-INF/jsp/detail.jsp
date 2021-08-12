@@ -22,10 +22,10 @@
         <div class="layui-form component" lay-filter="LAY-site-header-component"></div>
         <ul class="layui-nav" id="layui-nav-userinfo">
             <li data-id="index" class="layui-nav-item layui-hide-xs"><a class="fly-case-active" data-type="toTopNav"
-                                                                                   href="/home.jsp">首页</a></li>
+                                                                        href="/home.jsp">首页</a></li>
             <li data-id="room" class="layui-nav-item layui-hide-xs layui-this" ><a class="fly-case-active"
-                                                                       data-type="toTopNav"
-                                                                       href="/hotelList/toRoomList">房间</a></li>
+                                                                                   data-type="toTopNav"
+                                                                                   href="/hotelList/toRoomList">房间</a></li>
             <li data-id="login" class="layui-nav-item layui-hide-xs "><a class="fly-case-active" data-type="toTopNav"
                                                                          href="/login.jsp">登录</a></li>
             <li data-id="register" class="layui-nav-item layui-hide-xs "><a class="fly-case-active" data-type="toTopNav"
@@ -80,25 +80,21 @@
                     <input type="hidden" id="id" name="id" value="1">
                     <div class="store-attrs">
                         <div class="summary">
-                            <p class="reference"><span>房间号</span> <span id="roomNumber">${room.roomnum}</span></p>
+                            <p class="reference"><span>房间号</span> <span id="roomNumber">100</span></p>
                             <p class="reference"><span>床　型</span> <span id="bedType">${room.bednum}张单人床</span></p>
                             <p class="reference"><span>宽　带</span> <span id="broadband">免费wifi</span></p>
-                            <p class="reference"><span>标准价</span> ￥<span id="standardPrice" style="color: pink">${room.price}</span></p>
-                            <p class="activity"><span>会员价</span><strong class="price"><i>￥${room.price*0.85}</i><span id="memberPrice"></span></strong></p>
+                            <p class="reference"><span>标准价</span> ￥<span id="standardPrice" style="color: deeppink">${room.price}</span></p>
+                            <p class="activity"><span>会员价</span><strong class="price"><i>￥</i><span id="memberPrice">${room.price*0.85}</span></strong></p>
                             <p class="activity"><span>状&#12288;态</span>
-                            <strong class="status">
-
-                                 <span>${room.statusStr}</span>
-
-                                </strong>
-
+                            <strong class="status"><span>${room.statusStr}</span></strong>
                             </p>
                         </div>
                     </div>
 
-                    <p class="store-detail-active" id="shopEvent"> <a  href="javascript:;" id="bookRoom" onclick=bookNow() data-type="memberReserveHotel" class="store-bg-orange fly-memberReserveHotel">
-                        <input type="hidden" id="currentUser" value="${sessionScope.currentUser}">
-                        <i class="layui-icon layui-icon-dollar"></i>立即预定</a> </p>
+                    <%--设置隐藏域保存用户id--%>
+<%--                    <input type="text" id="currentUserId" value="">--%>
+                    <p class="store-detail-active" id="shopEvent"> <a href="javascript:" id="bookRoomBtn" data-type="memberReserveHotel" class="store-bg-orange fly-memberReserveHotel">
+                        <i class="layui-icon layui-icon-dollar"></i>立即预定 </a> </p>
                 </div>
             </div>
         </div>
@@ -106,12 +102,105 @@
     <div class="layui-card shopdata-content">
         <div class="layui-card-body detail-body layui-text">
             <div class="layui-elem-quote"> ${room.roomrequirement}</div>
-            <div id="roomContent"><p><img src="/hotel/show/${room.roomdesc}" style="max-width:100%;"><br></p></div>
+            <div id="roomContent"><p><img src="${room.roomrequirement}" style="max-width:100%;"><br></p></div>
         </div>
     </div>
 </div>
 <!-- 房间详情end -->
 
+<!-- 预订房间 -->
+<div style="display: none;padding: 5px" id="orderRoomWindow">
+    <form class="layui-form" style="width:90%;" id="dataFrm" lay-filter="dataFrm">
+        <!--添加隐藏域-->
+        <input type="hidden" name="accountid" value="${sessionScope.currentUser.id}">
+        <input type="hidden" name="roomid" value="${room.id}">
+        <input type="hidden" name="roomtypeid" value="${room.roomtypeid}">
+        <div class="layui-form-item">
+            <label class="layui-form-label">预订日期</label>
+            <div class="layui-input-block">
+                <input type="text" id="book_date" lay-verify="required" autocomplete="off" readonly placeholder="请选择预订日期范围"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">入住时间</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="arrivedate" id="arrivedate" lay-verify="required"  readonly placeholder="请选择入住时间"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">离店时间</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="leavedate" id="leavedate" lay-verify="required" readonly  placeholder="请选择离店时间"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">入住天数</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="day" id="day" lay-verify="required" readonly  placeholder="入住天数自动计算"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">房费价格</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="reserveprice" id="reservePrice" lay-verify="required"  readonly placeholder="房费价格自动计算"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">预订姓名</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="reservationname" lay-verify="required"  placeholder="请输入预订人姓名"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">预订电话</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="phone" lay-verify="required"  placeholder="请输入预订人电话"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">身份证号</label>
+            <div class="layui-input-block">
+                <input type="text" name="idcard" lay-verify="required" autocomplete="off" placeholder="请输入身份证号码"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">备注留言</label>
+            <div class="layui-input-block">
+                <textarea class="layui-textarea" name="remark" id="content"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item" style="margin-left: 80px">
+            <span style="color: red;font-size: 16px;">预订须知：请携带本人的身份证办理入住手续，办理入住需要在前台缴纳押金￥500</span>
+        </div>
+        <div class="layui-form-item layui-row layui-col-xs12">
+            <div class="layui-input-block" style="text-align: center;">
+                <button type="button" class="layui-btn" lay-submit lay-filter="doSubmit"><span
+                        class="layui-icon layui-icon-add-1"></span>提交
+                </button>
+                <button type="reset" class="layui-btn layui-btn-warm"><span
+                        class="layui-icon layui-icon-refresh-1"></span>重置
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
 
 <!-- 底部 -->
 <div class="fly-footer">
@@ -130,12 +219,45 @@
 <!-- 脚本开始 -->
 <script src="${pageContext.request.contextPath}/statics/front/layui/dist/layui.js"></script>
 <script>
-    layui.use(["form","element","carousel"], function () {
+    layui.use(["form","element","carousel","layer","laydate"], function () {
         var form = layui.form,
             layer = layui.layer,
             element = layui.element,
+            laydate = layui.laydate,
             carousel = layui.carousel,
             $ = layui.$;
+
+        //计算天数差
+        function getDays(strDateStart,strDateEnd){
+            var strSeparator = "-"; //日期分隔符
+            Date1= strDateStart.split(strSeparator);
+            oDate2= strDateEnd.split(strSeparator);
+            var strDateS = new Date(Date1[0], Date1[1]-1, Date1[2]);
+            var strDateE = new Date(oDate2[0], oDate2[1]-1, oDate2[2]);
+            iDays = parseInt(Math.abs(strDateS - strDateE ) / 1000 / 60 / 60 /24)//把相差的毫秒数转换为天数
+            return iDays ;
+        }
+
+        //渲染日期
+        laydate.render({
+           elem: "#book_date",
+            min: "new Date()",//限定开始日期
+            range: "至",
+            done: function (value,date,endDate){
+               let startDate = value.substr(0,value.indexOf(" ")).trim();//到店时间
+               let awayDate = value.substr(value.lastIndexOf(" "),value.length).trim();//离店时间
+                //赋值
+                $("#arrivedate").val(startDate);//入住时间
+                $("#leavedate").val(awayDate);//离店时间
+                //计算天数差
+                let days = getDays(startDate,awayDate);
+                //赋值给表单
+                $("#day").val(days);
+                //计算价格
+                let price = days * '${room.price}';
+                $("#reservePrice").val(price);
+            }
+        });
 
         //渲染轮播图
         carousel.render({
@@ -144,24 +266,52 @@
             ,height: '460' //设置容器高度
             ,arrow: 'always' //始终显示箭头
         });
+
+        let mainIndex;
+
+        //给预定按钮绑定单击事件
+        $("#bookRoomBtn").click(function (){
+            $.post("/detail/checkLogin",{},function (result) {
+                if (result){
+                    //没有登录
+                    alert("您还没有登录，请先登录！！");
+                    location.href = "/login.jsp";
+                }else {
+                    //登录了打开预定窗口界面
+                    mainIndex = layer.open({
+                        type: 1,
+                        title: "预定房间",
+                        area: ["800px","550px"],
+                        content: $("#orderRoomWindow"),
+                        success: function () {
+                            layer.close(mainIndex);
+                        }
+                    });
+                }
+            },"json")
+        });
+
+        //监听表单提交事件
+        form.on("submit(doSubmit)",function (data) {
+            console.log(data);
+            $.post("/orders/addOrders",data.field,function (result) {
+                if (result.success){
+                    layer.alert(result.message)
+                    layer.close(mainIndex);
+                }else{
+                    layer.alert(result.message)
+                }
+            });
+            return false;
+        });
+
+
+
+
+
+
+
     });
-
-    function bookNow() {
-        //获取隐藏域的user信息
-        // let userId = $("#bookRoom").val();
-        let user = document.getElementById("bookRoom").value;
-        alert(user);
-        // alert(userId);
-        if (user === "" || user.length === 0){
-            alert("您还没有登录，请先登录！");
-            location.href = "/login.jsp";
-        }else{
-            alert("出来");
-        }
-    }
-
-
-
 </script>
 <!-- 脚本结束 -->
 <ul class="layui-fixbar">
