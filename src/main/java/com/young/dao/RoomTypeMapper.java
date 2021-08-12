@@ -40,4 +40,11 @@ public interface RoomTypeMapper {
      * @return 删除结果
      */
     Integer deleteRoomType(Integer id);
+
+    /**
+     * 根据房型id查询房型
+     * @param roomtypeid 房型id
+     * @return 查询结果
+     */
+    RoomType findById(Integer roomtypeid);
 }

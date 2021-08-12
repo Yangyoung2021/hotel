@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en" class="fly-html-layui fly-html-store">
 <head>
@@ -84,7 +85,7 @@
                             <p class="reference"><span>床　型</span> <span id="bedType">${room.bednum}张单人床</span></p>
                             <p class="reference"><span>宽　带</span> <span id="broadband">免费wifi</span></p>
                             <p class="reference"><span>标准价</span> ￥<span id="standardPrice" style="color: deeppink">${room.price}</span></p>
-                            <p class="activity"><span>会员价</span><strong class="price"><i>￥</i><span id="memberPrice">${room.price*0.85}</span></strong></p>
+                            <p class="activity"><span>会员价</span><strong class="price"><i>￥</i><span id="memberPrice">${room.price-66.6}</span></strong></p>
                             <p class="activity"><span>状&#12288;态</span>
                             <strong class="status"><span>${room.statusStr}</span></strong>
                             </p>
@@ -93,8 +94,16 @@
 
                     <%--设置隐藏域保存用户id--%>
 <%--                    <input type="text" id="currentUserId" value="">--%>
-                    <p class="store-detail-active" id="shopEvent"> <a href="javascript:" id="bookRoomBtn" data-type="memberReserveHotel" class="store-bg-orange fly-memberReserveHotel">
-                        <i class="layui-icon layui-icon-dollar"></i>立即预定 </a> </p>
+                    <c:if test="${room.status == 1}">
+                        <p class="store-detail-active" id="shopEvent"> <a href="javascript:" id="bookRoomBtn" data-type="memberReserveHotel" class="store-bg-green fly-memberReserveHotel">
+                            <i class="layui-icon layui-icon-dollar"></i>立即预定 </a>
+                        </p>
+                    </c:if>
+                    <c:if test="${room.status != 1}">
+                        <p class="store-detail-active" id="shopEvent"> <a href="javascript:" id="bookRoomBtn2" data-type="memberReserveHotel" class="store-bg-orange fly-memberReserveHotel">
+                            <i class="layui-icon layui-icon-dollar"></i>立即预定 </a>
+                        </p>
+                    </c:if>
                 </div>
             </div>
         </div>
@@ -102,7 +111,9 @@
     <div class="layui-card shopdata-content">
         <div class="layui-card-body detail-body layui-text">
             <div class="layui-elem-quote"> ${room.roomrequirement}</div>
-            <div id="roomContent"><p><img src="${room.roomrequirement}" style="max-width:100%;"><br></p></div>
+            <div id="roomContent">
+                ${room.roomdesc}
+            </div>
         </div>
     </div>
 </div>
@@ -284,11 +295,16 @@
                         area: ["800px","550px"],
                         content: $("#orderRoomWindow"),
                         success: function () {
-                            layer.close(mainIndex);
+
                         }
                     });
                 }
             },"json")
+        });
+
+        //禁用按钮
+        $("#bookRoomBtn2").click(function () {
+            layer.msg("当前房间不可用");
         });
 
         //监听表单提交事件
@@ -296,10 +312,16 @@
             console.log(data);
             $.post("/orders/addOrders",data.field,function (result) {
                 if (result.success){
-                    layer.alert(result.message)
+                    alert("成功");
+                    //关闭窗口
                     layer.close(mainIndex);
-                }else{
-                    layer.alert(result.message)
+                    //删除成功
+                    layer.msg(result.message,{icon:5})
+                    //刷新页面
+                    location.replace(location.href);
+                }else {
+                    //提示信息
+                    layer.msg(result.message,{icon:6});
                 }
             });
             return false;

@@ -193,14 +193,13 @@
             url: '/admin/employee/findAll',
             toolbar: '#toolbarDemo',
             cols: [[
-                {type: "checkbox", width: 50},
                 {field: 'id', width: 100, title: '员工编号', align: "center"},
                 {field: 'loginName', width: 120, title: '登录名', align: "center"},
                 {field: 'name', width: 120, title: '真实姓名', align: "center"},
                 {field: 'sex', width: 80, title: '性别', align: "center"},
                 {field: 'deptName', width: 120, title: '所属部门', align: "center"},
-                {field: 'hireDate', width: 150, title: '入职日期', align: "center"},
-                {field: 'createDate', width: 150, title: '创建时间', align: "center"},
+                {field: 'hireDate', width: 120, title: '入职日期', align: "center"},
+                {field: 'createDate', width: 120, title: '创建时间', align: "center"},
                 {title: '操作', minWidth: 120, toolbar: '#currentTableBar', align: "center"}
             ]],
             page: true,

@@ -1,5 +1,6 @@
 package com.young.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
@@ -14,6 +15,7 @@ public class Orders {
     private String idcard;//身份证号码
     private String phone;//电话
     private Integer status;//订单状态 1-待确认 2-已确认
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date reservedate;//预订时间
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date arrivedate;//入住时间
@@ -21,6 +23,37 @@ public class Orders {
     private Date leavedate;//离店时间
     private Double reserveprice;//预订房价
     private String remark;//备注
+
+    //预定房型
+    private String typename;
+    //预定人
+    private String loginname;
+    //房间号
+    private Integer roomnum;
+
+    public Integer getRoomnum() {
+        return roomnum;
+    }
+
+    public void setRoomnum(Integer roomnum) {
+        this.roomnum = roomnum;
+    }
+
+    public String getTypename() {
+        return typename;
+    }
+
+    public void setTypename(String typename) {
+        this.typename = typename;
+    }
+
+    public String getLoginname() {
+        return loginname;
+    }
+
+    public void setLoginname(String loginname) {
+        this.loginname = loginname;
+    }
 
     public Integer getId() {
         return id;

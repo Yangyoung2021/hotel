@@ -47,6 +47,18 @@
             <if test="bednum != null">
                 bednum = #{bednum},
             </if>
+            <if test="roomnum!=null">
+                roomnum = #{roomnum},
+            </if>
+            <if test="reservednum!=null">
+                reservednum = #{reservednum},
+            </if>
+            <if test="avilablenum!=null">
+                avilablenum = #{avilablenum},
+            </if>
+            <if test="livednum!=null">
+                livednum = #{livednum},
+            </if>
         </set>
             where id = #{id}
     </update>
@@ -60,5 +72,10 @@
     <delete id="deleteRoomType" parameterType="int">
         delete from t_room_type where id = #{id}
     </delete>
+
+    <!--根据id查询房型-->
+    <select id="findById" parameterType="int" resultType="com.young.domain.RoomType">
+        select * from t_room_type where id = #{id}
+    </select>
 
 </mapper>
